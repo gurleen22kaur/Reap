@@ -3,7 +3,6 @@ package com.ttn.reap.reapbootcamp.controller;
 
 import com.ttn.reap.reapbootcamp.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +29,15 @@ public class UserController {
         return "home";
     }*/
 
+    @RequestMapping(value = {"/userSignUp"}, method = RequestMethod.GET)
+    public ModelAndView signup(){
+        ModelAndView modelAndView = new ModelAndView();
+        User user = new User();
+        modelAndView.addObject("user",user);
+        modelAndView.setViewName("/home/signup");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
     public ModelAndView userSignUp(@Valid User user, BindingResult bindingResult)
     {
@@ -55,18 +63,24 @@ public class UserController {
         return modelAndView;
     }
 
-    /*@RequestMapping(value = "/userLogin",method = RequestMethod.POST)
-    public ModelAndView userLogin(User user)
-    {
-        ModelAndView modelAndView=new ModelAndView();
-        System.out.println("hit");
-        System.out.println(user);
-        modelAndView.setViewName("login");
-        return modelAndView;
-    }*/
+    @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
+    public ModelAndView fetchUserFromDatabase(User user) {
+        ModelAndView modelAndView = new ModelAndView();
+        User userexistsemail = userService.findUserByEmail(user.getEmail());
+        if (userexistsemail != null) {
+            String userexistPassword = userexistsemail.getPassword();
+            if (!userexistPassword.isEmpty() && userexistPassword.equals(user.getPassword())) {
+                System.out.println("#### " + user.getEmail());
+                System.out.println("$$$$ " + userexistsemail.getPassword() + " %%%%%% " + user.getPassword());
+                modelAndView.setViewName("loginUser");
+            }
+        }
 
-    @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
-    @ResponseBody
+        return modelAndView;
+    }
+
+
+    /*@RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     public ModelAndView userLogin(User user , @RequestParam(required = true) String email ,@RequestParam(required = true) String password)
     {
 
@@ -74,14 +88,17 @@ public class UserController {
         System.out.println("hit");
         System.out.println(email);
         System.out.println(password);
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("loginUser");
         return modelAndView;
-    }
+    }*/
+
 
     @RequestMapping(value="/forgotPassword", method=RequestMethod.POST)
     public String recoverPass(@RequestParam("email") String email) {
         return "home";
     }
+
+
     }
 
 
