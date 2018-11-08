@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ttn.reap.reapbootcamp.service.UserService;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -19,6 +20,13 @@ public class UserController {
 
     @GetMapping("/")
     public String show(User user){
+        //return "dashboard";
+        return "home";
+    }
+
+    @GetMapping("/home")
+    public String returnHome()
+    {
         return "home";
     }
 
@@ -56,15 +64,16 @@ public class UserController {
             System.out.println(user);
             userService.saveOnSignUp(user);
             System.out.println("Registered");
-            modelAndView.addObject("msg","User has been registered successfully");
+            modelAndView.addObject("msg1","User has been registered successfully");
             modelAndView.addObject("user",new User());
             modelAndView.setViewName("home");
         }
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
-    public ModelAndView fetchUserFromDatabase(User user) {
+    @PostMapping("/login")
+    public ModelAndView fetchUserFromDatabase(@ModelAttribute("user") User user, HttpSession session) {
+        System.out.println("hii");
         ModelAndView modelAndView = new ModelAndView();
         User userexistsemail = userService.findUserByEmail(user.getEmail());
         if (userexistsemail != null) {
@@ -72,30 +81,61 @@ public class UserController {
             if (!userexistPassword.isEmpty() && userexistPassword.equals(user.getPassword())) {
                 System.out.println("#### " + user.getEmail());
                 System.out.println("$$$$ " + userexistsemail.getPassword() + " %%%%%% " + user.getPassword());
-                modelAndView.setViewName("loginUser");
+                session.setAttribute("user",user);
+                modelAndView.setViewName("dashboard");
             }
+            else{
+                modelAndView.addObject("msg","Incorrect Password");
+                modelAndView.setViewName("home");
+            }
+        }else{
+            modelAndView.addObject("msg","Email id doesn't Exist. Please register before login");
+            modelAndView.setViewName("home");
         }
-
         return modelAndView;
     }
 
+    @PostMapping("/logout")
+    public ModelAndView logout(HttpSession session ) {
+        ModelAndView modelAndView=new ModelAndView();
+        session.invalidate();
+        System.out.println("logout invoked");
+        modelAndView.setViewName("logoutUser");
+        return modelAndView;
+    }
 
-    /*@RequestMapping(value = "/userLogin",method = RequestMethod.POST)
-    public ModelAndView userLogin(User user , @RequestParam(required = true) String email ,@RequestParam(required = true) String password)
+   /* @PostMapping("/login")
+    public String loginUser(User user,@RequestParam("email") String email,@RequestParam("password") String password)
     {
 
-        ModelAndView modelAndView=new ModelAndView();
-        System.out.println("hit");
         System.out.println(email);
         System.out.println(password);
-        modelAndView.setViewName("loginUser");
-        return modelAndView;
+        User userEmailExist=userService.findUserByEmail(user.getEmail());
+        if (userEmailExist != null) {
+            String userexistPassword = userEmailExist.getPassword();
+            if (!userexistPassword.isEmpty() && userexistPassword.equals(user.getPassword())) {
+                System.out.println("#### " + user.getEmail());
+                System.out.println("$$$$ " + userEmailExist.getPassword() + " %%%%%% " + user.getPassword());
+                return "loginUser";
+            }
+            else
+                {
+                addObject("msg","Incorrect Password");
+                return "home";
+            }
+        }else{
+            modelAndView.addObject("msg","Email id doesn't Exist. Please register before login");
+            return "home";
+        }
+        return "loginUser";
     }*/
+
+
 
 
     @RequestMapping(value="/forgotPassword", method=RequestMethod.POST)
     public String recoverPass(@RequestParam("email") String email) {
-        return "home";
+        return "home_old";
     }
 
 

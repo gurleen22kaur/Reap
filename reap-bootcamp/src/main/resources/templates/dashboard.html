@@ -3,40 +3,42 @@
     <title>REAP</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link th:href="@{'/stylesheets/application.css'}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <script>
-        $(document).ready(function(){
-            $("form").submit(function(){
-                alert("User has been registered successfully");
-            });
-        });
-    </script>
 </head>
 <body>
+<div style="height: 65px" class="panel panel-default" >
+<div class="inline">
+    <img th:src="@{'/images/reap.png'}" th:height="45" th:width="80"/>
+    &nbsp;&nbsp;
+    <img th:src="@{'/images/reap1.png'}" />
+    &nbsp;&nbsp;
+    <button id="dashboard" type="Dashboard" class="btn btn-default" style="width: 150px; " >Dashboard
+        <span class="glyphicon glyphicon-dashboard"></span>
+    </button>
 
+    <button id="badges" type="submit" class="btn btn-default" style="width: 150px; ">Badges
+        <span class="glyphicon glyphicon-star"></span>
+    </button>
 
-<div class="container">
-    <h2>REAP</h2>
-    <!--&lt;!&ndash; Trigger the modal with a button &ndash;&gt;
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#loginModal">Login</button>
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signUpModal">Sign Up</button>
+    <button id="certificate" type="submit" class="btn btn-default" style="width: 150px; " >Certificate
+        <span class="glyphicon glyphicon-certificate"></span>
+    </button>
+</div>
+</div>
+<div class="inline">
+    <p> Hello </p>
+<div>
 
--->
-    <div class="login">
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login">
-            Login
-        </button>
-    </div>
+    <!--<button id="logout" th:action="@{'/logout'}" type="submit" class="btn btn-default"  style="background-color: #2e6da4" >Logout
+    <span class="glyphicon-log-out"></span>
+    </button>-->
 
-    <br><br>
-
-    <div class="signUp">
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signup">
-            Sign Up
-        </button>
-    </div>
+    <form enctype="multipart/form-data" class="form-vertical" th:action="@{'/logout'}" method="post">
+        <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
+</div>
 </div>
 </body>
 </html>
