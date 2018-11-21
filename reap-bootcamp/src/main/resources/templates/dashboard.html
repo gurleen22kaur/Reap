@@ -1,44 +1,179 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>REAP</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link th:href="@{'/stylesheets/application.css'}" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.4.6/collection/icon/icon.css" rel="stylesheet" id="ion-css">
+    <link href="../stylesheet/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../static/stylesheets/ionicons.css" th:href="@{/stylesheets/ionicons.css}" rel="stylesheet"/>
+    <link href="../static/stylesheets/style.css" th:href="@{/stylesheets/style.css}" rel="stylesheet"/>
 </head>
+
+<script>
+    function selectReason(event){
+        var drop = event.target;
+        var dropValue = drop.value;
+        if(dropValue == "Karma: Mentorship"){
+            document.getElementById("appreciate").value = "You have always led me by example, which inspires me a lot.";
+        }
+    }
+</script>
+
 <body>
-<div style="height: 65px" class="panel panel-default" >
-<div class="inline">
-    <img th:src="@{'/images/reap.png'}" th:height="45" th:width="80"/>
-    &nbsp;&nbsp;
-    <img th:src="@{'/images/reap1.png'}" />
-    &nbsp;&nbsp;
-    <button id="dashboard" type="Dashboard" class="btn btn-default" style="width: 150px; " >Dashboard
-        <span class="glyphicon glyphicon-dashboard"></span>
-    </button>
+<header>
+    <nav class="navbar header-nav navbar-expand-lg">
+        <div class="container" method="GET">
+            <a class="navbar-brand" href="#">
+                <img src="../images/reap.png"/>
+            </a>
+            <img src="../images/reap1.png"/>
+                    <button id="dashboard" type="Dashboard" class="btn btn-default" style="width: 150px; " >Dashboard
+                        <span class="glyphicon glyphicon-dashboard"></span>
+                    </button>
 
-    <button id="badges" type="submit" class="btn btn-default" style="width: 150px; ">Badges
-        <span class="glyphicon glyphicon-star"></span>
-    </button>
+                    <a th:href="@{/badges}">
+                        <button id="badges" type="submit" class="btn btn-default"  onclick="" style="width: 150px; ">Badges
+                            <span class="glyphicon glyphicon-star"></span>
+                        </button>
+                    </a>
 
-    <button id="certificate" type="submit" class="btn btn-default" style="width: 150px; " >Certificate
-        <span class="glyphicon glyphicon-certificate"></span>
-    </button>
-</div>
-</div>
-<div class="inline">
-    <p> Hello </p>
-<div>
+            <form th:action="@{'/logout'}">
+            <button id="logout"  type="submit" class="btn btn-default"  style="background-color: #2e6da4" >Logout
+                <span class="glyphicon-log-out"></span>
+            </button>
+            </form>
 
-    <!--<button id="logout" th:action="@{'/logout'}" type="submit" class="btn btn-default"  style="background-color: #2e6da4" >Logout
-    <span class="glyphicon-log-out"></span>
-    </button>-->
+        </div><!-- Container -->
+    </nav> <!-- Navbar -->
 
-    <form enctype="multipart/form-data" class="form-vertical" th:action="@{'/logout'}" method="post">
-        <button type="submit" class="btn btn-primary">Logout</button>
-    </form>
-</div>
-</div>
+    <div>
+        <h3>Welcome <span th:utext="${user.fname}"></span></h3>
+    </div>
+    <section class="section" name="Section1" style="padding-top: 30px; padding-bottom: 20px !important;">
+        <div class="container container-custom">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-img-top card-header" style="background-color: #0e5a80;">
+                            <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"> </i>
+                            Recognize Karma
+
+                        </div>
+                        <div class="card-body">
+                            <form id="recognize-form" role="form" th:action="@{/dashboard}" th:object="${user}"
+                                  class="form" method="post">
+                            <span class="card-text">
+                                <div class="input-group m-3" style="width:85%">
+                                    <div class="input-group-prepend" >
+                                        <span class="input-group-text" id="basic-addon1"> <img src="../images/person.png" style="height: 20px" width="20px"/></span>
+                                    </div>
+                                    <input type="text" class="form-control xs-3" placeholder="Username" name="destEmail" aria-label="Username" aria-describedby="basic-addon1 " required>
+
+
+                                    <select style="margin-left:30px" name="badgeId" required>
+                                        <option value="" selected> Select a Badge </option>
+                                        <div th:each="user:${user}">
+                                      <option name="Gold" value="1"> Gold <span th:utext="${user.goldCount}"></span></option>
+                                      <option name="Silver" value="2"> Silver <span th:utext="${user.silverCount}"></span></option>
+                                        <option name="Bronze" value="3"> Bronze <span th:utext="${user.bronzeCount}"></span></option>
+                                    </select>
+                                    <select style="margin-left:30px" onchange="selectReason(event)" name="karma" id=""required>
+                                       <option value="" selected> Select a Karma/Core Value </option>
+                                        <option value="Karma: Extra Miler">Karma: Extra Miler</option>
+                                        <option value="Karma: Knowledge Sharing">Karma: Knowledge Sharing</option>
+                                        <option value="Karma: Mentorship">Karma: Mentorship</option>
+                                        <option value="Karma: Pat on the back">Karma: Pat on the back</option>
+                                        <option value="Karma: Customer Delight">Karma: Customer Delight</option>
+                                        <option value="Core Value: Continuous Learning and Improvement">Core Value: Continuous Learning and Improvement</option>
+                                        <option value="Core Value: Contribution">Core Value: Contribution</option>
+                                        <option value="Core Value: Diligence<">Core Value: Diligence</option>
+                                        <option value="Core Value: Empathy">Core Value: Empathy</option>
+                                        <option value="Core Value: Openness to Feedback and Change">Core Value: Openness to Feedback and Change</option>
+                                        <option value="Core Value: Responsible Freedom">Core Value: Responsible Freedom</option>
+                                    </select>
+                                    </div>
+                            </span>
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger" role="alert" th:if="${message4}" th:utext="${message4}"></div>
+                                </div>
+                                <textarea rows="3" cols="90" class="m-3" id="appreciate" name="reason" required placeholder="Please specify a reason!"></textarea>
+                                <input type="Submit" value="Recognize" style="float:right !important;" class="btn btn-primary">
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- col -->
+            </div><!-- row -->
+        </div>
+    </section>
+
+    <section class="section" name="section 2" style="margin-top:10px !important; padding-top:0px !important;">
+        <div class="container container-custom">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card" style="width: 55rem;">
+                        <div class="card-img-top card-header" style="background-color: #0e5a80;">
+                            <i class="icon ion-md-save" style="padding-left:15px; padding-right:5px;"> </i> Wall Of Fame
+                        </div>
+                        <div class="card-body">
+                            <div class="newersBoardImage">
+                                <div th:each="recList:${recList}">
+                                    <img src="../images/person.png" style="height: 20px" width="20px"/>
+                                    <div><strong><td th:text="${recList.destEmail}"></strong> has received</td>
+                                    <td th:text="${recList.badgeType}"></td> from
+                                    <strong><td th:text="${recList.sourceEmail}"></strong></td> for Karma:
+                                    <td th:text="${recList.karma}"></td><br> Reason:<td th:text="${recList.reason}"></td></div>
+                                </div></div></div>
+
+                            </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+        <div class="col-md-2 sm-m-30px-t">
+            <div class="card" style="width: 19rem; margin-left: 920px; margin-top: -1150px;">
+                <div class="card-img-top card-header" style="background-color: #0e5a80;">
+                    <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"> </i> My
+                    Badges
+                </div>
+
+                <div class="card-body">
+                    <img src="../images/person.png " height="50px" width="50px" class="badgeImage">
+                    <div th:each="user:${user}">
+                        <h6 class="card-title"><span th:utext="${user.fname}"></span></h6><br/><br/>
+                        <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"><b>Gold&nbsp&nbsp&nbsp<span><img src="../images/goldBadge.jpeg" style="height: 20px" width="20px"></span></b><span th:utext="${user.earnedGold}"></span></i><br/>
+                        <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"><b>Silver&nbsp&nbsp&nbsp<span><img src="../images/silverBadge.jpeg" style="height: 20px" width="20px"></span></b><span th:utext="${user.earnedSilver}"></span> </i><br/>
+                        <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"><b>Bronze&nbsp&nbsp&nbsp<span><img src="../images/bronzeBadge.jpeg" style="height: 20px" width="20px"></span></b><span th:utext="${user.earnedBronze}"></span> </i><br/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+       <!-- <div class="col-md-2 sm-m-30px-t">
+            <div class="card" style="width: 19rem; margin-left: 920px; margin-top: -850px;">
+                <div class="card-img-top card-header" style="background-color: #0e5a80;">
+                    <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"> </i> My
+                    Newer's Board
+                </div>
+                <div class="card-body">
+                    <img src="../images/person.png " height="50px" width="50px" class="badgeImage">
+                    <div th:each="user:${user}">
+                        <h6 class="card-title"><span th:utext="${user.fname}"></span></h6><br/><br/>
+                        <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"><b>Gold&nbsp&nbsp&nbsp<span><img src="../images/goldBadge.jpeg" style="height: 20px" width="20px"></span></b><span th:utext="${user.earnedGold}"></span></i><br/>
+                        <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"><b>Silver&nbsp&nbsp&nbsp<span><img src="../images/silverBadge.jpeg" style="height: 20px" width="20px"></span></b><span th:utext="${user.earnedSilver}"></span> </i><br/>
+                        <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"><b>Bronze&nbsp&nbsp&nbsp<span><img src="../images/bronzeBadge.jpeg" style="height: 20px" width="20px"></span></b><span th:utext="${user.earnedBronze}"></span> </i><br/>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </section>
+
+</header>
 </body>
 </html>

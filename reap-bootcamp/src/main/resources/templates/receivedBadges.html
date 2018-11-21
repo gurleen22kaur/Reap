@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.4.6/collection/icon/icon.css" rel="stylesheet" id="ion-css">
+    <link href="../stylesheet/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../static/stylesheets/ionicons.css" th:href="@{/stylesheets/ionicons.css}" rel="stylesheet"/>
+    <link href="../static/stylesheets/style.css" th:href="@{/stylesheets/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<header>
+    <nav class="navbar header-nav navbar-expand-lg">
+        <div class="container" method="GET">
+            <a class="navbar-brand" href="#">
+                <img src="../images/reap.png"/>
+            </a>
+            <img src="../images/reap1.png"/>
+
+
+            <form th:action="@{/dashboard}">
+                <button id="dashboard" type="Dashboard" class="btn btn-default" style="width: 150px; " >Dashboard
+                    <span class="glyphicon glyphicon-dashboard"></span>
+                </button>
+            </form>
+
+            <a th:href="@{/badges}">
+                <button id="badges" type="submit" class="btn btn-default"  onclick="" style="width: 150px; ">Badges
+                    <span class="glyphicon glyphicon-star"></span>
+                </button>
+            </a>
+
+            <form th:action="@{'/logout'}">
+                <button id="logout"  type="submit" class="btn btn-default"  style="background-color: #2e6da4" >Logout
+                    <span class="glyphicon-log-out"></span>
+                </button>
+            </form>
+
+        </div>
+    </nav>
+
+    <div class="col-lg-8 col-md-8" style="float: right; margin-right: 50px; background-color: gray; margin-top: -290px;">
+        <div class="box-content" style="float: left; width: 100%; margin-top: 15px;">
+            <div class="head-bar no-bg" style="height: auto !important;width: 100%;float: left; border-radius: 5px 5px 0 0;">
+                <div class="head-inputs" style="color: #ffffff;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12" style="width: 100%; float: left;">
+                            <ul class="nav nav-tabs trending" style="margin: 0;width: 100%;display: table;border-radius: 5px 5px 0 0;float: left;font-size: 13px;position: relative;z-index: 1;font-weight: bold;text-transform: uppercase;color: #000000;border: 0;overflow: hidden;padding-left: 0;">
+                                <li class="active" style="float: none;margin-bottom: -1px;display: table-cell;text-align: center;">
+                                    <a th:href="@{/allBadges}" style="color: white; font-size: 25px;">All</a>
+                                </li>
+                                <li class="active" style="float: none;margin-bottom: -1px;display: table-cell;text-align: center;">
+                                    <a th:href="@{/sharedBadges}" style="color: white; font-size: 25px;">Badges Shared</a>
+                                </li>
+                                <li class="active" style="float: none;margin-bottom: -1px;display: table-cell;text-align: center;">
+                                    <a th:href="@{/receivedBadges}" style="color: white; font-size: 25px;">Badges Received</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12" style="position: relative;display: block;overflow: auto;padding-right: 15px;padding-left: 15px;float: left;width: 100%;background-color: white;margin-top: 5px;">
+        <div class="row" style="margin-right: -5px;margin-left: -5px;box-sizing: border-box;">
+            <div class="col-lg-11" style="padding-left: 40px !important;width: 100%;">
+                <div th:each="receivedList:${receivedList}">
+                    <p>
+                        <strong><td th:text="${receivedList.destEmail}"></strong> has received</td>
+                    <td th:text="${receivedList.badgeType}"></td> from
+                    <strong><td th:text="${receivedList.sourceEmail}"></strong></td> for
+                    <td th:text="${receivedList.karma}"></td><br/>
+                    <td th:text="${receivedList.reason}"></td>
+                    </p><br/><hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+</html>

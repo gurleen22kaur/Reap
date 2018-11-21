@@ -1,0 +1,215 @@
+button:focus{
+    color:#FF1493;
+    background-color:#FF1493 ;
+}
+body{
+    background-color:#E9E9FA;
+}
+
+.header-nav {
+    background: #fff;
+    border-bottom: 5px solid #F9ECEC;
+    padding: 15px 10px;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.header-nav .navbar-toggler span {
+    background: #fff;
+}
+
+.header-nav .navbar-brand {
+    color: #fff;
+    font-weight: 700;
+    position: relative;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 20px;
+    margin-top: 10px;
+}
+.header-nav .navbar-brand span{
+    color: #fc8902;
+    font-size: 13px;
+    display: block;
+    text-transform: capitalize;
+}
+
+.header-nav .navbar-nav > li {
+    margin: 0 0 0 28px;
+}
+.header-nav .navbar-nav .nav-link {
+    position: relative;
+    padding: 0;
+    display: inline-block;
+    font-size: 12px;
+    vertical-align: top;
+    color: black;
+    font-weight: 500;
+    line-height: 38px;
+    text-transform: uppercase;
+}
+.header-nav .navbar-nav .nav-link:after {
+    content: '';
+    position: absolute;
+    z-index: 10;
+    width: 0;
+    left: 0;
+    bottom: -25px;
+    top: 0;
+    margin: auto;
+    height: 2px;
+    background: #fc8902;
+    -webkit-transition: ease all 0.2s;
+    -moz-transition: ease all 0.2s;
+    -o-transition: ease all 0.2s;
+    transition: ease all 0.2s;
+
+}
+.header-nav .navbar-nav .nav-link.active{
+    color: #fc8902;
+}
+.header-nav .navbar-nav .nav-link:hover:after {
+    width: 110%;
+    left: -5%;
+}
+.header-nav .navbar-nav .nav-link.active:after {
+    width: 100%;
+    left: -0%;
+}
+
+.header-nav .navbar-nav .nav-btn.nav-link {
+    padding: 0 20px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+}
+.header-nav .navbar-nav .nav-btn.nav-link:after {
+    display: none;
+}
+.header-nav .navbar-nav > li {
+    position: relative;
+}
+.header-style-04 .extra-menu a {
+    color: #fff;
+}
+
+@media(min-width: 992px) {
+    .header-nav .navbar-nav > li .sub-menu {
+        background: #fff;
+        margin: 0;
+        padding: 10px 0;
+        min-width: 200px;
+        max-width: 100%;
+        position: absolute;
+        left: 0;
+        top: calc(100% + 30px);
+        list-style: none;
+        border-radius: 1px;
+        opacity: 0;
+        box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
+        pointer-events: none;
+        -webkit-transition: ease all 0.3s;
+        -moz-transition: ease all 0.3s;
+        -o-transition: ease all 0.3s;
+        transition: ease all 0.3s;
+    }
+    .header-nav .navbar-nav > li .sub-menu-toggle {
+        color: #fff;
+        font-size: 10px;
+        margin-left: 5px;
+        line-height: 38px;
+    }
+    .header-nav .navbar-nav > li:hover .sub-menu {
+        opacity: 1;
+        pointer-events: auto;
+        top: 100%;
+    }
+    .header-nav-light.header-nav .navbar-nav > li .sub-menu-toggle {
+        color: #222;
+    }
+}
+
+.header-nav .navbar-nav > li .sub-menu li > a {
+    color: #333;
+    font-size: 13px;
+    display: block;
+    padding: 5px 20px 5px 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+    text-decoration: none;
+    -webkit-transition: ease all 0.3s;
+    -moz-transition: ease all 0.3s;
+    -o-transition: ease all 0.3s;
+    transition: ease all 0.3s;
+
+}
+
+.header-nav .navbar-nav > li .sub-menu li > a:after {
+    width: 0px;
+    bottom: 14px;
+    left: 9px;
+    content: "";
+    position: absolute;
+    height: 2px;
+    background: #fc8902;
+    -webkit-transition: ease all 0.3s;
+    -moz-transition: ease all 0.3s;
+    -o-transition: ease all 0.3s;
+    transition: ease all 0.3s;
+}
+
+.header-nav .navbar-nav > li .sub-menu li:hover > a {
+    padding-left: 28px;
+    color: #fc8902;
+}
+.header-nav .navbar-nav > li .sub-menu li:hover > a:after {
+    width: 8px;
+}
+.header-nav1{
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.glyphyicon{
+    height:20px;
+    margin-right: 3px;
+}
+
+.section {
+    padding: 100px 0;
+}
+
+@media (max-width: 991px){
+    .section {
+        padding: 60px 0;
+    }
+}
+
+@media (max-width: 767px){
+    .section {
+        padding: 40px 0;
+    }
+}
+
+.card-header{
+    padding:3px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.container-custom{
+    margin-left:0px !important;
+    margin-right:0px !important;
+    padding-right:40px !important;
+    padding-left:40px !important;
+}
+
+.badgeImage{
+    float:left;
+    margin-right: 30px;
+}
+
+.newersBoardImage{
+    margin-bottom: 20px;
+}
